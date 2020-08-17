@@ -13,7 +13,7 @@
             <h1 class="title">Mermaid-Microservice Tester</h1>
             <div class="field">
                 <div class="control">
-                    <textarea class="textarea"></textarea>
+                    <textarea id="mermaidText" class="textarea"></textarea>
                 </div>
             </div>
             <div class="field">
@@ -23,9 +23,22 @@
             </div>
         </div>
     </section>
+    <section class="section">
+        <div class="container">
+            <img id="mermaidImage">
+        </div>
+    </section>
     <script>
         function submitPressed() {
-            console.log("Hi");
+            $.ajax({
+                type: "POST",
+                url: "/render",
+                contentType: "application/json",
+                data: JSON.stringify({ data: $('#mermaidText').val() })
+            })
+                .done(function(data) {
+                    $('#mermaidImage').attr('src', data);
+                });
         }
     </script>
 </body>
